@@ -17,7 +17,7 @@ body{
 
 /* Page d'accueil */
 .batman-cover{
-    height: 300px;
+    height: 400px;
     background-image: url("../images/batmanbanner3.jpg");
     background-size: cover;
 }
