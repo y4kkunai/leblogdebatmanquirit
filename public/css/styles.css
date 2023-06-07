@@ -1,5 +1,5 @@
+/* Police */
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
 
 /* Body */
 body{
@@ -8,16 +8,19 @@ body{
     color: #F5F7F9;
 }
 
-
 /* Menu principal */
 .main-navbar .main-navbar-logo{
-    width: 50px;
+    width: 55px;
     margin-right: 16px;
 }
 
 /* Page d'accueil */
 .batman-cover{
-    height: 400px;
+    height: 550px;
     background-image: url("../images/batmanbanner3.jpg");
-    background-size: cover;
+}
+
+element.style {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out 0s;
 }
