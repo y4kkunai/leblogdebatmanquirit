@@ -4,7 +4,7 @@
 
         {# Logo et titre du site #}
         <a class="navbar-brand" href="{{ path('main_home') }}">
-            <img class="img-fluid main-navbar-logo" src="{{ asset('images/bat-removebg-preview.png') }}" alt="">Le Blog de Batman
+            <img class="img-fluid main-navbar-logo" src="{{ asset('images/bat-removebg-preview.png') }}" alt="">Batman Who Laughs
         </a>
 
         {# Bouton burger #}
@@ -37,7 +37,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                         {# Bouton de la page qui liste tous les articles #}
-                        <li><a class="dropdown-item" href="##################">Publications</a></li>
+                        <li><a class="dropdown-item" href="{{ path('blog_publication_list') }}">Publications</a></li>
 
                         {# Affichage des boutons réservés aux administrateur #}
                         {% if is_granted('ROLE_ADMIN') %}
@@ -76,7 +76,7 @@
                         <div class="dropdown-menu" aria-labelledby="profil-dropdown">
 
                             {# Lien de la page mon profil #}
-                            <a class="dropdown-item text-info" href="{{ path('main_profil') }}"><i class="fas fa-users-cog me-1"></i>Mon Profil</a>
+                            <a class="dropdown-item" href="{{ path('main_profil') }}"><i class="fas fa-users-cog me-1"></i>Mon Profil</a>
 
                             {# Séparateur #}
                             <div class="dropdown-divider"></div>

@@ -35,19 +35,18 @@ class BlogController extends AbstractController
         //Liaison des données POST au formulaire
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $newArticle
-            ->setPublicationDate(new \DateTime())
-            ->setAuthor( $this->getUser())
-        ;
+                ->setPublicationDate(new \DateTime())
+                ->setAuthor($this->getUser());
             $em = $doctrine->getManager();
             $em->persist($newArticle);
             $em->flush();
 
             $this->addFlash('success', 'Article publié avec succès !');
 
-        // TODO: penser à rediriger sur la page qui montre le nouvel article
+            // TODO: penser à rediriger sur la page qui montre le nouvel article
             return $this->redirectToRoute('main_home');
         }
 
@@ -55,4 +54,26 @@ class BlogController extends AbstractController
             'new_publication_form' => $form->createView()
         ]);
     }
+
+    /**
+     * Contrôleur de la page qui liste tous les articles
+     */
+    #[Route('/publications/liste/', name: 'publication_list')]
+    public function publicationList(ManagerRegistry $doctrine): Response
+
+    {
+
+        $articleRepo = $doctrine->getRepository(Article::class);
+
+        $articles = $articleRepo->findAll()
+;
+        return $this->render('blog/publication_list.html.twig', [
+
+            'articles' => $articles,
+
+        ]);
+
+    }
+
+
 }
