@@ -44,12 +44,13 @@
                                     <div class="mb-2">
 
                                         {# Affichage du contenu de l'article, tronqué à 100 mots, sans balises html, suivi de "..." et d'un lien "lire la suite" #}
-                                        {{ article.content | excerpt(100) }}
-                                        <a class="text-decoration-none" href="#####">Lire la suite</a>
+                                        {{ article.content|striptags|excerpt(100) }}
+                                        <a class="text-decoration-none" href="{{ path('blog_publication_view', {slug: article.slug}) }}">Lire la suite</a>
                                     </div>
 
                                     {# Date et auteur de l'article #}
-                                    <footer class="blockquote-footer my-2">Publié le <strong>{{ article.publicationDate|date ('d/m/y à h\\hi') }}</strong> par <strong>{{ article.author.pseudonym  }}</strong></footer>
+                                    <footer class="blockquote-footer my-2">Publié le <strong>Publié le</strong> {{ article.publicationDate|date ('d/m/Y à H\\hi') }} <strong>{{ article.author.pseudonym }}</strong></footer>
+
 
                                 </div>
 
