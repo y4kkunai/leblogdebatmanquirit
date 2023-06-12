@@ -32,7 +32,7 @@ symfony cosole doctrine:fixtures:load
 Cette commande créera : 
 * un compte admin (email: a@a.a , password: 'aaaaaaaA7/')
 * 10 comptes utilisateurs (email aléatoire , password : 'aaaaaaaA7/')
-* 50 articles
+* 200 articles
 
 ### Installations fichiers front-end des bundles (CKEditor)
 ```
