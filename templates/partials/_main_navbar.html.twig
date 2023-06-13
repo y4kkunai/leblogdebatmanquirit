@@ -4,7 +4,7 @@
 
         {# Logo et titre du site #}
         <a class="navbar-brand" href="{{ path('main_home') }}">
-            <img class="img-fluid main-navbar-logo" src="{{ asset('images/embleme-batman.png') }}" alt="">{{ site_name }}
+            <img class="img-fluid main-navbar-logo" src="{{ asset('images/bat-removebg-preview.png') }}" alt="">Batman Who Laughs
         </a>
 
         {# Bouton burger #}
@@ -46,7 +46,7 @@
                             <li><hr class="dropdown-divider"></li>
 
                             {# Bouton de la page pour créer un nouvel article #}
-                            <li><a class="dropdown-item" href="{{ path('blog_new_publication') }}">Nouvelle Publication</a></li>
+                            <li><a class="dropdown-item" href="{{ path('blog_publication_new') }}">Nouvelle Publication</a></li>
 
                         {% endif %}
 

@@ -17,10 +17,8 @@ body{
 
 /* Page d'accueil */
 .batman-cover{
-    height: 400px;
-    background-image: url('../images/batman-cover.png');
-    background-attachment: fixed;
-    background-size: cover;
+    height: 550px;
+    background-image: url('../images/batmanbanner3.jpg');
 }
 
 /* Menus paginations */
