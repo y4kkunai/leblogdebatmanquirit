@@ -2,19 +2,22 @@
 {% extends "base.html.twig" %}
 
 {# Définition du titre de la page #}
-{% block title %}Erreur {{ status_code }} {{ status_text }}{% endblock %}
+{% block title %}Erreur {{ status_code }} - {{ status_text }}{% endblock %}
 
 {# Remplissage du body de la page #}
-{% block body  %}
+{% block body %}
 
-    {# Grille de Bootstrap #}
+    {# Grille Bootstrap #}
     <div class="container-fluid">
 
 
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center my-5">Erreur {{ status_code }} - {{ status_text }}</h1>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center my-5">Erreur {{ status_code }} - {{ status_text }}</h1>
+            </div>
         </div>
+
+
     </div>
 
 {% endblock %}

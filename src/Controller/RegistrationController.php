@@ -16,51 +16,58 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/creer-un-compte', name: 'app_register')]
+
+    /**
+     * Contrôleur de la page d'inscription
+     */
+    #[Route('/creer-un-compte/', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, RecaptchaValidator $recaptcha): Response
     {
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted()) {
 
-           $captchaResponse = $request->$request->get("g-recaptcha-response", null);
+            // Récupération valeur du captcha
+            $captchaResponse = $request->request->get('g-recaptcha-response', null);
 
-           $ip = $request->server->get("REMOTE_ADDR");
+            // Récupération adresse IP
+            $ip = $request->server->get('REMOTE_ADDR');
 
-           if ($captchaResponse == null || !$recaptcha->verify($captchaResponse, $ip)){
-               $form->addError(new FormError('Veuillez remplir le captcha de sécurité'));
-           }
+            // Si le captcha contient "null" ou n'est pas valide, on ajoute une erreur dans le formulaire
+            if($captchaResponse == null || !$recaptcha->verify($captchaResponse, $ip)){
+                $form->addError( new FormError('Veuillez remplir le captcha de sécurité') );
+            }
 
-           if ($form->isValid()){
+            if($form->isValid()) {
 
+                // encode the plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+                // Hydratation de la date d'inscription du nouvel utilisateur
+                $user->setRegistrationDate(new \DateTime());
 
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+                $entityManager->persist($user);
+                $entityManager->flush();
+                // do anything else you need here, like send an email
 
-            // Hydratation de la date d'inscription du nouvel utilisateur
-            $user->setRegistrationDate( new \DateTime());
+                // Message flash de succès
+                $this->addFlash('success', 'Votre compte a bien été créé avec succès !');
 
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            // Message flash de succès
-            $this->addFlash('success', 'Votre compte à bien été créé avec succès !');
-
-            return $this->redirectToRoute('app_login');
-           }
+                return $this->redirectToRoute('app_login');
+            }
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
+
+
 }

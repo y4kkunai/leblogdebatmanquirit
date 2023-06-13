@@ -21,19 +21,19 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-        // on instancie le Faker en langue française
+        // On instancie le Faker en langue française
         $faker = Faker\Factory::create('fr_FR');
 
         // Création d'un compte admin
         $admin = new User();
 
         $admin
-            ->setEmail('non536620@gmail.com')
-            ->setRegistrationDate( $faker->dateTimeBetween('1-year', 'now'))
-            ->setPseudonym('Yakkunai')
+            ->setEmail('a@a.a')
+            ->setRegistrationDate( $faker->dateTimeBetween('-1 year', 'now') )
+            ->setPseudonym('Batman')
             ->setRoles(['ROLE_ADMIN'])
             ->setPassword(
-                $this->encoder->hashPassword($admin, 'Axel181924.')
+                $this->encoder->hashPassword($admin, 'aaaaaaaaA7/')
             )
         ;
 
@@ -46,9 +46,9 @@ class AppFixtures extends Fixture
             $user = new User();
 
             $user
-                ->setEmail($faker->email)
-                ->setRegistrationDate( $faker->dateTimeBetween('1-year', 'now' ))
-                ->setPseudonym($faker->userName)
+                ->setEmail( $faker->email )
+                ->setRegistrationDate( $faker->dateTimeBetween('-1 year', 'now') )
+                ->setPseudonym( $faker->userName )
                 ->setPassword(
                     $this->encoder->hashPassword($admin, 'aaaaaaaaA7/')
                 )
@@ -58,18 +58,19 @@ class AppFixtures extends Fixture
 
         }
 
+        // Création de 200 articles
         for($i = 0; $i < 200; $i++){
 
             $article = new Article();
 
             $article
-                ->setTitle( $faker->sentence(10))
-                ->setContent($faker->paragraph(15))
-                ->setPublicationDate( $faker->dateTimeBetween('-1 year', 'now'))
-                ->setAuthor($admin)
-                ;
+                ->setTitle( $faker->sentence(10) )
+                ->setContent( $faker->paragraph(15) )
+                ->setPublicationDate( $faker->dateTimeBetween('-1 year', 'now') )
+                ->setAuthor( $admin )
+            ;
 
-            $manager->persist( $article);
+            $manager->persist( $article );
 
         }
 

@@ -12,6 +12,6 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
-###> Exclusion customs ###
+###> exclusions customs ###
 /.idea/
-###> Exclusion customs ###
+###< exclusions customs ###

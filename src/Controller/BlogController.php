@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\NewPublicationFormType;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,51 +13,55 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
 /**
  * Préfixe de la route et du nom de toutes les pages de la partie blog du site
  */
-#[ROUTE('/blog', name: 'blog_')]
+#[Route('/blog', name: 'blog_')]
 class BlogController extends AbstractController
 {
 
-    /*
+    /**
      * Contrôleur de la page permettant de créer un nouvel article
      */
-    #[Route('/nouvelle-publication', name: 'new_publication')]
+    #[Route('/nouvelle-publication/', name: 'new_publication')]
     #[IsGranted('ROLE_ADMIN')]
-    public function NewPublication(Request $request, ManagerRegistry $doctrine): Response
+    public function newPublication(Request $request, ManagerRegistry $doctrine): Response
     {
 
-        //Création d'un nouvel article vide
+        // Création d'un nouvel article vide
         $newArticle = new Article();
 
+        // Création d'un formulaire de création d'article, lié à l'article vide
         $form = $this->createForm(NewPublicationFormType::class, $newArticle);
 
-        //Liaison des données POST au formulaire
+        // Liaison des données POST au formulaire
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        // Si le formulaire a bien été envoyé et sans erreurs
+        if($form->isSubmitted() && $form->isValid()){
 
+            // On termine d'hydrater l'article
             $newArticle
                 ->setPublicationDate(new \DateTime())
-                ->setAuthor($this->getUser());
+                ->setAuthor( $this->getUser() )
+            ;
+
+            // Sauvegarde en base de données grâce au manager des entités
             $em = $doctrine->getManager();
             $em->persist($newArticle);
             $em->flush();
 
+            // Message flash de succès
             $this->addFlash('success', 'Article publié avec succès !');
 
-
-            return $this->redirectToRoute('blog_publication_view',[
-
-            'slug' => $newArticle->getSlug(),
-
+            // Redirige sur la page qui montre le nouvel article
+            return $this->redirectToRoute('blog_publication_view', [
+                'slug' => $newArticle->getSlug(),
             ]);
         }
 
         return $this->render('blog/new_publication.html.twig', [
-            'new_publication_form' => $form->createView()
+            'new_publication_form' => $form->createView(),
         ]);
     }
 
@@ -67,11 +70,11 @@ class BlogController extends AbstractController
      */
     #[Route('/publications/liste/', name: 'publication_list')]
     public function publicationList(ManagerRegistry $doctrine, Request $request, PaginatorInterface $paginator): Response
-
     {
-        $requestedPage = $request->query->getInt('pagge', 1);
 
-        if ($requestedPage < 1){
+        $requestedPage = $request->query->getInt('page', 1);
+
+        if($requestedPage < 1){
             throw new NotFoundHttpException();
         }
 
@@ -85,26 +88,52 @@ class BlogController extends AbstractController
             10
         );
 
+        dump($articles);
+
         return $this->render('blog/publication_list.html.twig', [
-
             'articles' => $articles,
-
         ]);
-
     }
+
 
     /**
      * Contrôleur de la page permettant de voir un article en détail
      */
-
     #[Route('/publication/{slug}/', name: 'publication_view')]
     public function publicationView(Article $article): Response
     {
 
         return $this->render('blog/publication_view.html.twig', [
-                'article' => $article,
-
+            'article' => $article,
         ]);
+    }
+
+    /**
+     * Contrôleur de la page admin servant à supprimer un article via son id passé dans l'URL
+     *
+     * Accès réservé aux administrateurs (ROLE_ADMIN)
+     */
+    #[Route('/publication/suppression/{id}/', name: 'publication_delete', priority: 10)]
+    #[IsGranted('ROLE_ADMIN')]
+    public function publicationDelete(Article $article, ManagerRegistry $doctrine, Request $request): Response
+    {
+
+        // Verif si token csrf valide
+        if(!$this->isCsrfTokenValid( 'blog_publication_delete_' . $article->getId(), $request->query->get('csrf_token') )){
+
+            $this->addFlash('error', 'Token sécurité invalide, veuillez ré-essayer.');
+
+        } else {
+
+            $em = $doctrine->getManager();
+            $em->remove($article);
+            $em->flush();
+
+            $this->addFlash('success', 'La publication a été supprimée avec succès !');
+
+        }
+
+        return $this->redirectToRoute('blog_publication_list');
 
     }
 

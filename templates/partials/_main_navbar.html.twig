@@ -4,7 +4,7 @@
 
         {# Logo et titre du site #}
         <a class="navbar-brand" href="{{ path('main_home') }}">
-            <img class="img-fluid main-navbar-logo" src="{{ asset('images/bat-removebg-preview.png') }}" alt="">Batman Who Laughs
+            <img class="img-fluid main-navbar-logo" src="{{ asset('images/embleme-batman.png') }}" alt="">{{ site_name }}
         </a>
 
         {# Bouton burger #}
@@ -39,9 +39,8 @@
                         {# Bouton de la page qui liste tous les articles #}
                         <li><a class="dropdown-item" href="{{ path('blog_publication_list') }}">Publications</a></li>
 
-                        {# Affichage des boutons réservés aux administrateur #}
+                        {# Affichage des boutons réservés aux administrateurs #}
                         {% if is_granted('ROLE_ADMIN') %}
-
 
                             {# Séparateur #}
                             <li><hr class="dropdown-divider"></li>
@@ -55,14 +54,14 @@
 
                 </li>
 
-
             </ul>
 
             {# Paquet des boutons de droite #}
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                {# Affichage des liens réservés aux utilisateurs connectés (et ceux pour les personnes déconnectées dans le "else")  #}
+                {# Affichage des liens réservés aux utilisateurs connectés (et ceux pour les personnes déconnectées dans le "else") #}
                 {% if app.user %}
+
                     {# Menu déroulant #}
                     <li class="nav-item dropdown">
 
@@ -87,20 +86,23 @@
                         </div>
 
                     </li>
+
                 {% else %}
-                    {# Lien de la page d'insription #}
+
+                    {# Lien de la page d'inscription #}
                     <li class="nav-item">
-                        <a href="{{ path('app_register') }}" class="nav-link text-primary{{ route == 'app_register' ? ' active' }}">
+                        <a href="{{ path('app_register') }}" class="nav-link{{ route == 'app_register' ? ' active' }}">
                             <i class="fa-solid fa-user-plus mx-1"></i>Inscription
                         </a>
                     </li>
 
-                    {# Lien de la page connexion #}
+                    {# Lien de la page de connexion #}
                     <li class="nav-item">
-                        <a href="{{ path('app_login') }}" class="nav-link text-success{{ route == 'app_login' ? ' active' }}">
+                        <a href="{{ path('app_login') }}" class="nav-link{{ route == 'app_login' ? ' active' }}">
                             <i class="fa-solid fa-right-to-bracket mx-1"></i>Connexion
                         </a>
                     </li>
+
                 {% endif %}
 
             </ul>

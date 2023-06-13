@@ -5,56 +5,54 @@
 {% block title %}Créer un compte{% endblock %}
 
 {# Remplissage du body de la page #}
-{% block body  %}
+{% block body %}
 
-    {# Grille de Bootstrap #}
-<div class="container-fluid">
+    {# Grille Bootstrap #}
+    <div class="container-fluid">
 
-    {# Titre h1 de la page #}
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center my-5">Créer un compte</h1>
+        {# Titre h1 de la page #}
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center my-5">Créer un compte</h1>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
+        {# Formulaire d'inscription #}
+        <div class="row">
             <div class="col-12 col-md-4 mx-auto">
 
                 {# Ouverture du formulaire #}
                 {{ form_start( registrationForm ) }}
 
-                {# Affichage des erreurs générales du formulaire #}
-                {{ form_errors(registrationForm) }}
+                    {# Affichage des erreurs générales du formulaire #}
+                    {{ form_errors( registrationForm ) }}
 
-                {# Champ email #}
-                {{ form_row( registrationForm.email ) }}
+                    {# Champ email #}
+                    {{ form_row( registrationForm.email ) }}
 
-                {# Champ pseudonyme #}
-                {{ form_row( registrationForm.pseudonym ) }}
+                    {# Champ pseudonyme #}
+                    {{ form_row( registrationForm.pseudonym ) }}
 
-                {# Champ mot de passe #}
-                {{ form_row( registrationForm.plainPassword ) }}
+                    {# Champ mot de passe #}
+                    {{ form_row( registrationForm.plainPassword ) }}
 
-                <!-- Ce champ permet d'afficher le captcha de Google en utilisant la clé de site (la première des deux clés) -->
-                <div class="g-recaptcha mb-2" data-sitekey="{{ google_recaptcha_site_key }}"></div>
+                    <!-- Ce champ permet d'afficher le captcha de Google en utilisant la clé de site (la première des deux clés) -->
+                    <div class="g-recaptcha mb-2" data-sitekey="{{ google_recaptcha_site_key }}"></div>
 
-                {# Bouton de validation #}
-                {{ form_row( registrationForm.save ) }}
+                    {# Bouton de validation #}
+                    {{ form_row( registrationForm.save ) }}
 
                 {# Fermeture du formulaire #}
                 {{ form_end( registrationForm ) }}
             </div>
+        </div>
+
     </div>
-
-
-</div>
-
-
-    {% endblock %}
-
-{% block js %}
-
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 {% endblock %}
 
+
+{% block js %}
+    <!-- Ce script est nécessaire pour faire fonctionner le Recaptcha Google -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}

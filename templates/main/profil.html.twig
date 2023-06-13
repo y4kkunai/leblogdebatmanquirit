@@ -5,9 +5,9 @@
 {% block title %}Gestion du profil{% endblock %}
 
 {# Remplissage du body de la page #}
-{% block body  %}
+{% block body %}
 
-    {# Grille de Bootstrap #}
+    {# Grille Bootstrap #}
     <div class="container-fluid">
 
         {# Titre h1 de la page #}
@@ -16,7 +16,6 @@
                 <h1 class="text-center my-5">Gestion du profil</h1>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-12 col-md-10 mx-auto">
@@ -29,7 +28,7 @@
                         <div class="row">
                             <div class="col-10 mx-auto d-flex justify-content-center align-items-center">
 
-                                <img class="img-thumbnail"  src="{{ asset('images/829.jpg') }}" alt="" >
+                                <img class="img-thumbnail" src="{{ asset('images/profil_default.jpg') }}" alt="">
 
                             </div>
                         </div>
@@ -50,7 +49,7 @@
                         <ul class="list-group col-12 col-md-8 p-0">
                             <li class="list-group-item bg-black text-white">Adresse Email : <span class="text-info">{{ app.user.email }}</span></li>
                             <li class="list-group-item bg-black text-white">Pseudonyme : <span class="text-info">{{ app.user.pseudonym }}</span></li>
-                            <li class="list-group-item bg-black text-white">Date d'inscription : <span class="text-info">{{ app.user.registrationDate|date ('d/m/y à h\\hi') }}</span></li>
+                            <li class="list-group-item bg-black text-white">Date d'inscription : <span class="text-info">{{ app.user.registrationDate|date('d/m/Y à H\\hi') }}</span></li>
                             <li class="list-group-item bg-black text-white">
                                 Compte :
                                 <span class="text-info">{{ is_granted('ROLE_ADMIN') ? 'Administrateur' : 'Utilisateur' }}</span>

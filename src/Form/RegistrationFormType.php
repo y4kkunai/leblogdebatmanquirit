@@ -16,12 +16,13 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
+            // Champ email
             ->add('email', EmailType::class, [
                 'label' => 'Adresse Email',
                 'constraints' => [
@@ -29,18 +30,19 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Merci de renseigner une adresse email',
                     ]),
                     new Email([
-                        'message' => 'L\'adresse email {{ value }} n\'est pas une adresse valide'
+                        'message' => 'L\'adresse email {{ value }} n\'est pas une adresse valide',
                     ]),
                 ],
             ])
 
+            // Champ mot de passe (en double)
             ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe ne correspond pas à sa confirmation',
                 'first_options' => [
-                    'label' => 'Mot de passe'
+                    'label' => 'Mot de passe',
                 ],
                 'second_options' => [
                     'label' => 'Confirmation du mot de passe',
@@ -65,7 +67,8 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
 
-            ->add('pseudonym', TextType::class,[
+            // Champ pseudo
+            ->add('pseudonym', TextType::class, [
                 'label' => 'Pseudonyme',
                 'constraints' => [
                     new NotBlank([
@@ -75,19 +78,18 @@ class RegistrationFormType extends AbstractType
                         'min' => 2,
                         'max' => 40,
                         'minMessage' => 'Votre pseudonyme doit contenir au moins {{ limit }} caractères',
-                        'maxMessage' => 'Votre pseudonyme doit contenir au maximum {{ limit }} caractères'
+                        'maxMessage' => 'Votre pseudonyme doit contenir au maximum {{ limit }} caractères',
                     ]),
-                ],
-
-                ])
-
-            ->add('save', SubmitType::class, [
-                'label' => 'Créer mon compte',
-                'attr' => [
-                    'class' => 'btn btn-outline-primary w-100'
                 ],
             ])
 
+            // Bouton de validation
+            ->add('save', SubmitType::class, [
+                'label' => 'Créer mon compte',
+                'attr' => [
+                    'class' => 'btn btn-outline-primary w-100',
+                ],
+            ])
 
         ;
     }
@@ -96,7 +98,6 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-
         ]);
     }
 }

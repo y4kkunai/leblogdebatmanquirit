@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use function Sodium\add;
 
 class NewPublicationFormType extends AbstractType
 {
@@ -24,13 +23,13 @@ class NewPublicationFormType extends AbstractType
                 'label' => 'Titre',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Merci de renseigner un titre'
+                        'message' => 'Merci de renseigner un titre',
                     ]),
                     new Length([
                         'min' => 2,
                         'max' => 150,
                         'minMessage' => 'Le titre doit contenir au moins {{ limit }} caractères',
-                        'maxMessage' => 'Le titre doit contenir au maximum {{ limit }} caractères'
+                        'maxMessage' => 'Le titre doit contenir au maximum {{ limit }} caractères',
                     ]),
                 ],
             ])
@@ -43,23 +42,24 @@ class NewPublicationFormType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Merci de renseigner un contenu'
+                        'message' => 'Merci de renseigner un contenu',
                     ]),
                     new Length([
                         'min' => 2,
                         'max' => 50000,
                         'minMessage' => 'Le contenu doit contenir au moins {{ limit }} caractères',
-                        'maxMessage' => 'Le contenu doit contenir au maximum {{ limit }} caractères'
+                        'maxMessage' => 'Le contenu doit contenir au maximum {{ limit }} caractères',
                     ]),
                 ],
             ])
 
-            ->add('save', SubmitType::class,[
+            ->add('save', SubmitType::class, [
                 'label' => 'Publier',
                 'attr' => [
-                    'class' => 'btn btn-outline-primary w-100'
+                    'class' => 'btn btn-outline-primary w-100',
                 ],
             ])
+
         ;
     }
 
@@ -70,8 +70,9 @@ class NewPublicationFormType extends AbstractType
 
             // TODO : à virer à la fin
             'attr' => [
-                'novalidate' => 'novalidate'
-            ]
+                'novalidate' => 'novalidate',
+            ],
+
         ]);
     }
 }

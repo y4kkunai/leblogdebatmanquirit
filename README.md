@@ -1,14 +1,14 @@
-# Projet Le Blog de Batman qui rit
+# Projet Le Blog de Batman
 
 ### Cloner le projet
 
 ```
-git clone https://github.com/Axelyakk/leblocdebatmanquirit.git
+git clone https://github.com/Anthony-Dmn/leblogdebatman_2027.git
 ```
 
 ### Déplacer le terminal dans le dossier cloné
 ```
-cd leblogdebatmanquirit
+cd leblogdebatman_2027
 ```
 
 ### Installer les vendors (pour recréer le dossier vendor)
@@ -16,29 +16,26 @@ cd leblogdebatmanquirit
 composer install
 ```
 
-## Création d'une base de données
+### Création base de données
 Configurer la connexion à la base de données dans le fichier .env (voir cours), puis taper les commandes suivantes :
 ```
 symfony console doctrine:database:create
 symfony console doctrine:migrations:migrate
-
 ```
+
 ### Création des fixtures
-
 ```
-symfony cosole doctrine:fixtures:load
-
+symfony console doctrine:fixtures:load
 ```
-Cette commande créera : 
-* un compte admin (email: a@a.a , password: 'aaaaaaaA7/')
-* 10 comptes utilisateurs (email aléatoire , password : 'aaaaaaaA7/')
+Cette commande créera :
+* Un compte admin (email: a@a.a , password : 'aaaaaaaaA7/')
+* 10 compte utilisateurs (email aléatoire , password : 'aaaaaaaaA7/')
 * 200 articles
 
-### Installations fichiers front-end des bundles (CKEditor)
+### Installation fichiers front-end des bundles (CKEditor)
 ```
 symfony console assets:install public
 ```
-
 
 ### Lancer le serveur
 ```
