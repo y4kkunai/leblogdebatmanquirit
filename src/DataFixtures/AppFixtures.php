@@ -31,12 +31,12 @@ class AppFixtures extends Fixture
 
         // Hydratation du compte admin
         $admin
-            ->setEmail('a@a.a')
+            ->setEmail('non536620@gmail.com')
             ->setRegistrationDate( $faker->dateTimeBetween('-1 year', 'now') )
-            ->setPseudonym('Batman')
+            ->setPseudonym('Yakkunai')
             ->setRoles(['ROLE_ADMIN'])
             ->setPassword(
-                $this->encoder->hashPassword($admin, 'aaaaaaaaA7/')
+                $this->encoder->hashPassword($admin, 'Azerty123.')
             )
         ;
 
