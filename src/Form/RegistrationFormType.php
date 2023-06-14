@@ -37,8 +37,6 @@ class RegistrationFormType extends AbstractType
 
             // Champ mot de passe (en double)
             ->add('plainPassword', RepeatedType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe ne correspond pas à sa confirmation',
                 'first_options' => [

@@ -4,22 +4,26 @@ namespace App\Recaptcha;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
+/**
+ * Service permettant de vérifier si un captcha est valide auprès des serveurs de Google
+ */
 class RecaptchaValidator{
 
-    private ParameterBagInterface $params;
+    /**
+     * Importation du service d'accès aux paramètres globaux du site
+     */
+    public function __construct(private ParameterBagInterface $params){}
 
-    public function __construct(ParameterBagInterface $params)
-    {
-        $this->params = $params;
-    }
-
+    /**
+     * Méthode qui renverra "true" si le captcha dont le code est passé en paramètre est valide, sinon false
+     */
     public function verify($code, $ip = null)
     {
         if(empty($code)) {
             return false;
         }
         $params = [
-            'secret'    => $this->params->get('google_recaptcha_private_key'),
+            'secret'    => $this->params->get('google_recaptcha_private_key'),  // Récupération de la clé privée de Google Recaptcha depuis les paramètres du site
             'response'  => $code
         ];
         if($ip){

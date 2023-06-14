@@ -1,4 +1,4 @@
-{# On crée une variable Twig "route" qui contiendra le nom de la route actuellement chargée (servira pour le menu entre autre) #}
+{# Variable Twig contenant le nom de la route actuelle (servira pour le menu du site) #}
 {% set route = app.request.attributes.get('_route') %}
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,7 +10,7 @@
     <title>{% block title %}{% endblock %} - {{ site_name }}</title>
     {# Inclusion de Font-Awesome #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    {# Inclusion de Bootstrap #}
+    {# Inclusion CSS Bootstrap #}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     {# Inclusion Styles perso #}
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
@@ -24,8 +24,8 @@
 
     {# Inclusion de l'affichage des messages flashes de type "success" et "error" #}
     {% include 'partials/_flashes.html.twig' %}
-    
-    {# Inclusion du contenu des pages (via le block "body") #}
+
+    {# Bloc pour afficher le contenu des pages #}
     {% block body %}{% endblock %}
 
     {# Inclusion JS Bootstrap #}

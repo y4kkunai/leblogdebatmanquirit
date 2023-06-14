@@ -24,50 +24,67 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, RecaptchaValidator $recaptcha): Response
     {
 
+        // Si l'utilisateur est déjà connecté, on le redirige sur l'accueil
+        if($this->getUser()){
+            return $this->redirectToRoute('main_home');
+        }
+
+        // Création d'un nouvel utilisateur
         $user = new User();
+
+        // Création d'un nouveau formulaire de création de compte
         $form = $this->createForm(RegistrationFormType::class, $user);
+
+        // Remplissage du formulaire avec les données POST (dans $request)
         $form->handleRequest($request);
 
+        // Si le formulaire a été envoyé
         if ($form->isSubmitted()) {
 
-            // Récupération valeur du captcha
+            // Récupération de la valeur du captcha ( $_POST['g-recaptcha-response'] )
             $captchaResponse = $request->request->get('g-recaptcha-response', null);
 
-            // Récupération adresse IP
+            // Récupération de l'adresse IP de l'utilisateur ( $_SERVER['REMOTE_ADDR'] )
             $ip = $request->server->get('REMOTE_ADDR');
 
-            // Si le captcha contient "null" ou n'est pas valide, on ajoute une erreur dans le formulaire
+            // Si le captcha est null ou s'il est invalide, ajout d'une erreur générale sur le formulaire (qui sera considéré comme échoué après)
             if($captchaResponse == null || !$recaptcha->verify($captchaResponse, $ip)){
+
+                // Ajout d'une nouvelle erreur dans le formulaire
                 $form->addError( new FormError('Veuillez remplir le captcha de sécurité') );
             }
 
+            // Si le formulaire n'a pas d'erreur
             if($form->isValid()) {
 
-                // encode the plain password
+                // Hydratation du mot de passe hashé, en utilisant le service de hashage
                 $user->setPassword(
                     $userPasswordHasher->hashPassword(
                         $user,
                         $form->get('plainPassword')->getData()
                     )
                 );
+
                 // Hydratation de la date d'inscription du nouvel utilisateur
                 $user->setRegistrationDate(new \DateTime());
 
+                // Sauvegarde en base de données du nouveau compte grâce au manager général des entités
                 $entityManager->persist($user);
                 $entityManager->flush();
-                // do anything else you need here, like send an email
+
 
                 // Message flash de succès
                 $this->addFlash('success', 'Votre compte a bien été créé avec succès !');
 
+                // Redirection de l'utilisateur vers la page de connexion
                 return $this->redirectToRoute('app_login');
             }
         }
 
+        // Appel en la vue en lui envoyant le formulaire à afficher
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registration_form' => $form->createView(),
         ]);
     }
-
 
 }

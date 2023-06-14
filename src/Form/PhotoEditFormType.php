@@ -2,8 +2,6 @@
 
 namespace App\Form;
 
-
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -12,12 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class EditPhotoFormType extends AbstractType
+class PhotoEditFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
 
+            // Champ photo
             ->add('photo', FileType::class, [
                 'label' => 'Sélectionner une nouvelle photo',
                 'attr' => [
@@ -38,14 +37,14 @@ class EditPhotoFormType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'L\'image doit être de type jpg ou png !',
                     ]),
-
                 ],
             ])
 
+            // Bouton de validation
             ->add('save', SubmitType::class, [
                 'label' => 'Changer la photo',
-                'attr' =>[
-                    'class' => 'btn btn-outline-primary w-100'
+                'attr' => [
+                    'class' => 'btn btn-outline-primary w-100',
                 ],
             ])
 

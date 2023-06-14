@@ -46,7 +46,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // Redirection après une connexion réussie
+        // Redirection de l'utilisateur sur l'accueil quand il a réussi à se connecter
         return new RedirectResponse($this->urlGenerator->generate('main_home'));
     }
 

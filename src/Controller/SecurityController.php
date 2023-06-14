@@ -36,6 +36,9 @@ class SecurityController extends AbstractController
     #[Route(path: '/deconnexion/', name: 'app_logout')]
     public function logout(): void
     {
+
+        // Le code ici ne sera jamais lu, car la page de déconnexion est déjà gérée en interne par le bundle security.
+
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 

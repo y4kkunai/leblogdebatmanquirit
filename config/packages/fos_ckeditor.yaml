@@ -4,6 +4,7 @@ twig:
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 
+# Configuration personnalisée de l'apparence de CKEditor
 fos_ck_editor:
     configs:
         general:

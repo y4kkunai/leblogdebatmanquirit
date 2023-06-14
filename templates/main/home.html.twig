@@ -1,10 +1,10 @@
-{# Utilisation du squelette "base.html.twig" #}
+{# Utilisation du squelette de page "base.html.twig" #}
 {% extends "base.html.twig" %}
 
-{# Définition du titre de la page #}
+{# Titre de la page #}
 {% block title %}Accueil{% endblock %}
 
-{# Remplissage du body de la page #}
+{# Contenu de la page #}
 {% block body %}
 
     {# Grille Bootstrap #}
@@ -19,22 +19,92 @@
 
         {# Contenu lorem #}
         <div class="row">
-            <div class="col-12 col-md-10 mx-auto">
 
-                <h2 class="text-center my-4">Batman Who Laughs aussi appelé Batman qui Rit</h2>
+            <h2 class="text-center col-12 my-4">Batman Who Laughs aussi appelé Batman Qui Rit</h2>
 
-                <p class="text-center"> 	Le Batman qui rit. Un Batman d'un monde du Multivers Noir si semblable au nôtre que c'en est effrayant. Il a tué son Joker, mais a été empoisonné par une toxine que le coeur de son pire ennemi a libérée. Sur son monde, c'était le prédateur ultime. Il a massacré chaque héros et vilain... tout en riant pendant que sa terre s'enfonçait dans l'abîme. 	„
-                    ~ Description du Batman qui Rit
+            <p class="col-12 col-md-10 mx-auto text-center"> 	Le Batman qui rit. Un Batman d'un monde du Multivers Noir si semblable au nôtre que c'en est effrayant. Il a tué son Joker, mais a été empoisonné par une toxine que le coeur de son pire ennemi a libérée. Sur son monde, c'était le prédateur ultime. Il a massacré chaque héros et vilain... tout en riant pendant que sa terre s'enfonçait dans l'abîme. 	„
+                ~ Description du Batman qui Rit
 
-                    Le Batman qui Rit est un super-méchant majeur du Dark Multiverse de DC Comics. Il est l'antagoniste secondaire à la fois de Nuits sombres  : Metal et Dark Nights  : Death Metal, l'antagoniste principal de la mini-série de sept numéros de The Batman Who Laughs, et l'un des personnages principaux aux côtés de Lex Luthor dans la saga Year of the Villain.
+                Le Batman qui Rit est un super-méchant majeur du Dark Multiverse de DC Comics. Il est l'antagoniste secondaire à la fois de Nuits sombres  : Metal et Dark Nights  : Death Metal, l'antagoniste principal de la mini-série de sept numéros de The Batman Who Laughs, et l'un des personnages principaux aux côtés de Lex Luthor dans la saga Year of the Villain.
 
-                    C'est une version "Jokerisée" de Batman qui provient du Dark Multiverse. Il est le chef d'équipe des Dark Knights et leur but était d'aider leur maître Barbatos à plonger l'ensemble du multivers dans l'obscurité totale. Cette action fait d'eux des ennemis de la Justice League. Le Batman Who Laughs tire son origine d'une autre Terre, qui lui a fait tuer sa propre version du Joker. </p>
+                C'est une version "Jokerisée" de Batman qui provient du Dark Multiverse. Il est le chef d'équipe des Dark Knights et leur but était d'aider leur maître Barbatos à plonger l'ensemble du multivers dans l'obscurité totale. Cette action fait d'eux des ennemis de la Justice League. Le Batman Who Laughs tire son origine d'une autre Terre, qui lui a fait tuer sa propre version du Joker. </p>
 
-            </div>
         </div>
 
         {# Affichage de l'image fixe en bandeau #}
-        <div class="row my-5 batman-cover"></div>
+        <div class="batman-cover row my-5"></div>
+
+
+        {# Affichage des derniers articles publiés #}
+        <div class="row">
+
+            <div class="col-12 col-md-8 mx-auto">
+
+                <div class="row">
+                    <h2 class="col-12 text-center">Dernières publications</h2>
+                </div>
+
+                {# Boucle pour parcourir tous les articles à afficher #}
+                {% for article in articles %}
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <div class="card my-3 bg-black">
+
+                                <div class="card-header">
+
+                                    {# Titre de l'article, cliquable vers la page détaillée de l'article #}
+                                    <a class="text-decoration-none" href="{{ path('blog_publication_view', {'slug': article.slug}) }}"><i class="far fa-newspaper me-2"></i>{{ article.title }}</a>
+                                </div>
+
+                                <div class="card-body text-light">
+
+                                    <div class="mb-2">
+
+                                        {# Affichage du contenu de l'article, tronqué à 150 caractères, sans balises html, suivi de "..." et d'un lien "lire la suite" #}
+                                        {{ article.content|striptags|excerpt(100) }}...
+                                        <a class="text-decoration-none" href="{{ path('blog_publication_view', {'slug': article.slug}) }}">Lire la suite</a>
+                                    </div>
+
+                                    {# Date et auteur de l'article #}
+                                    <footer class="blockquote-footer my-2">Publié le <strong>{{ article.publicationDate|date('d/m/Y à H\\hi') }}</strong> par <strong>{{ article.author.pseudonym }}</strong></footer>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    <div class="row">
+                        <p class="col-12 text-center alert alert-warning">Aucune publication à afficher.</p>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        {# Contenu lorem #}
+        <div class="row mb-5">
+
+            <h2 class="text-center col-12 my-4">Dark Robins aussi appelé les Robins Sombre</h2>
+
+            <p class="col-12 col-md-10 mx-auto text-center mb-5">Les Robins Noirs que l'on voit habituellement accompagner le Batman Who Laughs sont un groupe d'enfants qui faisaient probablement partie des nombreux Jokerisés par le Joker après qu'il ait tué leurs parents dans un allié. Plus tard, Laughs les a recueillis et les a transformés en "animaux de compagnie" qui ont apparemment perdu la majeure partie de leur humanité. À cause de cela, le seul mot qu'ils savent dire est "crow" et ils attaqueront vicieusement et peut-être dévoreront tous ceux qu'ils sont envoyés chasser, à moins que le Batman qui rit ou un de ses alliés ne leur dise de se mettre au pied du mur en prononçant le mot "bar". C'est une référence au meurtre d'un Robin par le Joker avec un pied de biche (crowbar en anglais).
+
+                Le Damian Wayne de la Terre-22 a également été transformé en Robin des Ténèbres. Mais contrairement aux autres Robins, Damian est toujours capable de parler et a conservé sa capacité à penser de façon plus rationnelle. Il a aidé son père à lutter contre la résistance de Gotham jusqu'à ce qu'il soit tué par son homologue de Prime Earth à l'aide d'une flèche faite de Nth Metal.
+
+                Le Batman Who Laughs peut apparemment transformer d'autres enfants en Robins Noirs s'il le souhaite. Il a donné au Chevalier Noir quelques Robins Noirs qui étaient tous des versions alternatives de James Gordon Jr. de différents mondes.
+
+                Il semble que Billy Batson de la Terre Primaire soit devenu un Robin des Ténèbres, après avoir été infecté par la matière noire par un batarang spécial pendant la saga de l'Année du Méchant. Cependant, Billy aurait pu se déguiser pour tendre une embuscade à Batman et Superman.</p>
+
+        </div>
 
     </div>
 

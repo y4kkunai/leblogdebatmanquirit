@@ -15,7 +15,9 @@ security:
             security: false
         main:
             login_throttling:
+                # Blocage des tentatives de connexion échouées au bout de 5 échecs
                 max_attempts: 5
+                # Temps avant déblocage
                 interval: '15 minutes'
             lazy: true
             provider: app_user_provider

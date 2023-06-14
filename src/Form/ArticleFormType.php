@@ -6,22 +6,22 @@ use App\Entity\Article;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class NewPublicationFormType extends AbstractType
+class ArticleFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
 
+            // Champ titre
             ->add('title', TextType::class, [
                 'label' => 'Titre',
-                'empty_data' => '',
+                'empty_data' => '',     // Nécessaire pour ne pas faire planter la page de modification d'un article si le champ est envoyé vide
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci de renseigner un titre',
@@ -35,8 +35,10 @@ class NewPublicationFormType extends AbstractType
                 ],
             ])
 
+            // Champ contenu
             ->add('content', CKEditorType::class, [
                 'label' => 'Contenu',
+                'empty_data' => '',     // Nécessaire pour ne pas faire planter la page de modification d'un article si le champ est envoyé vide
                 'purify_html' => true,
                 'attr' => [
                     'class' => 'd-none',
@@ -54,6 +56,7 @@ class NewPublicationFormType extends AbstractType
                 ],
             ])
 
+            // Bouton de validation
             ->add('save', SubmitType::class, [
                 'label' => 'Publier',
                 'attr' => [
@@ -68,7 +71,6 @@ class NewPublicationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Article::class,
-
         ]);
     }
 }

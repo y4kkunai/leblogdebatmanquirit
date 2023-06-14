@@ -1,10 +1,10 @@
-{# Utilisation du squelette "base.html.twig" #}
+{# Utilisation du squelette de page "base.html.twig" #}
 {% extends "base.html.twig" %}
 
-{# Définition du titre de la page #}
+{# Titre de la page #}
 {% block title %}Modification d'une publication{% endblock %}
 
-{# Remplissage du body de la page #}
+{# Contenu de la page #}
 {% block body %}
 
     {# Grille Bootstrap #}
@@ -17,16 +17,18 @@
             </div>
         </div>
 
+        {# Lien pour revenir sur la fiche de l'article #}
         <div class="row">
             <div class="col-12 text-center">
-                {# Lien pour revenir sur la fiche de l'article #}
-                <a href="{{ path('blog_publication_view', {slug: edit_form.vars.value.slug}) }}" class="text-decoration-none">Revenir sur l'article</a>
+                {# Lien pour revenir sur la fiche de l'article. On récupère l'id et le slug de l'article, nécessaires pour construire le lien, directement via le formulaire #}
+                <a href="{{ path('blog_publication_view', {slug: publication_edit_form.vars.value.slug}) }}" class="text-decoration-none">Revenir sur l'article</a>
             </div>
         </div>
 
+        {# Affichage du formulaire de modification de l'article #}
         <div class="row">
             <div class="col-12 col-md-8 mx-auto">
-                {{ form( edit_form ) }}
+                {{ form( publication_edit_form ) }}
             </div>
         </div>
 

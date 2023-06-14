@@ -17,7 +17,7 @@ body{
 
 /* Page d'accueil */
 .batman-cover{
-    height: 550px;
+    height: 400px;
     background-image: url('../images/batmanbanner3.jpg');
 }
 
@@ -37,4 +37,20 @@ body{
 
 .pagination .page-item a.page-link:hover{
     background-color: #292929;
+}
+
+/* Affichage des images de profil dans les commentaires */
+.comment-profil-photo{
+    width: 100px;
+    height: 100px;
+}
+
+
+/* Position du bouton suppression d'un commentaire */
+.admin-button-article{
+    position: absolute;
+    top: 14px;
+    right: 0;
+    display: inline-block;
+    width: auto;
 }
