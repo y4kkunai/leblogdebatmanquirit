@@ -3,7 +3,7 @@
 ## 1 - Cloner le projet
 
 ```
-git clone https://github.com/Axelyakk/leblocdebatmanquirit.git
+git clone https://github.com/y4kkunai/leblocdebatmanquirit.git
 ```
 
 ## 2 - Déplacer le terminal dans le dossier cloné
